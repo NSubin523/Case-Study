@@ -2,6 +2,7 @@ package com.target.targetcasestudy.api
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.target.targetcasestudy.data.model.Deal
 
 @JsonClass(generateAdapter = true)
 data class DealResponse(

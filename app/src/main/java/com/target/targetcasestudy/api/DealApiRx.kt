@@ -1,5 +1,6 @@
 package com.target.targetcasestudy.api
 
+import com.target.targetcasestudy.data.model.Deal
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

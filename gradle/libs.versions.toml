@@ -4,14 +4,23 @@ androidXActivity               = "1.9.3"
 androidXAppCompat              = "1.7.0"
 androidXTestCore               = "1.6.1"
 androidXTestRunner             = "1.6.2"
+coilComposeVersion = "2.5.0"
 composeBom                     = "2024.12.01"
 composeCompiler                = "1.5.11"
+converterMoshiVersion = "2.9.0"
 espresso                       = "3.6.1"
 hilt                           = "2.54"
 junit                          = '4.13.2'
 kotlin                         = "2.1.0"
+kotlinxCoroutinesAndroidVersion = "1.7.3"
+kotlinxCoroutinesCoreVersion = "1.7.3"
 ksp                            = "2.1.0-1.0.29"
+lifecycleRuntimeComposeVersion = "2.9.1"
+lifecycleViewmodelComposeVersion = "2.9.1"
 moshi                          = "1.15.2"
+moshiKotlinCodegenVersion = "1.15.0"
+moshiVersion = "1.15.0"
+navigationComposeVersion = "2.9.0"
 retrofit                       = "2.11.0"
 okHttp                         = "4.12.0"
 glide                          = "4.16.0"
@@ -19,6 +28,8 @@ gson                           = "2.11.0"
 
 
 [libraries]
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
+converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterMoshiVersion" }
 gradlePlugin-android     = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePluginVersion"}
 gradlePlugin-hilt        = {module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt"}
 gradlePlugin-kotlin      = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin"}
@@ -41,8 +52,14 @@ hiltAndroid              = {module = "com.google.dagger:hilt-android", version.r
 hiltCompiler             = {module = "com.google.dagger:hilt-compiler", version.ref = "hilt"}
 jackson                  = "com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2"
 kotlin                   = {module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin"}
-moshi                    = {module = "com.squareup.moshi:moshi", version.ref = "moshi"}
-moshiKotlinCodeGen       = {module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi"}
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroidVersion" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCoreVersion" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeComposeVersion" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelComposeVersion" }
+moshi                    = { module = "com.squareup.moshi:moshi", version.ref = "moshiVersion" }
+moshi-kotlin             = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiVersion" }
+moshi-kotlin-codegen     = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshiKotlinCodegenVersion" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
 okHttp                   = {module = "com.squareup.okhttp3:okhttp", version.ref = "okHttp"}
 retrofit                 = {module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit"}
 retrofitRx2Adapter       = {module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "retrofit"}

@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.target.targetcasestudy.R
-import com.target.targetcasestudy.data.DealItem
+import com.target.targetcasestudy.data.model.DealItem
 import com.target.targetcasestudy.data.StaticData
 
 @Composable

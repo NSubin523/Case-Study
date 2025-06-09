@@ -18,8 +18,8 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_21
-    targetCompatibility JavaVersion.VERSION_21
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
   }
 
   kotlin {
@@ -64,7 +64,6 @@ dependencies {
   implementation libs.gson
 
   implementation libs.moshi
-  ksp libs.moshiKotlinCodeGen
 
   implementation libs.jackson
 
@@ -73,6 +72,22 @@ dependencies {
 
   implementation libs.hiltAndroid
   ksp libs.hiltCompiler
+
+  implementation libs.navigation.compose
+  implementation libs.lifecycle.viewmodel.compose
+  implementation libs.lifecycle.runtime.compose
+  implementation(libs.coil.compose)
+  implementation libs.kotlinx.coroutines.core
+  implementation libs.kotlinx.coroutines.android
+
+// Moshi Kotlin Codegen (for reflection-based parsing)
+  implementation libs.moshi.kotlin
+  ksp libs.moshi.kotlin.codegen
+
+// Moshi Converter for Retrofit
+  implementation libs.converter.moshi
+
+
 
   // Testing
   testImplementation libs.junit

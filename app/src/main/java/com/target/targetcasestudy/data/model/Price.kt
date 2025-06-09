@@ -1,4 +1,4 @@
-package com.target.targetcasestudy.api
+package com.target.targetcasestudy.data.model
 
 data class Price(
   val amountInCents: Int,

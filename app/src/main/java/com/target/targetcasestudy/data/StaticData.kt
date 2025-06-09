@@ -1,5 +1,7 @@
 package com.target.targetcasestudy.data
 
+import com.target.targetcasestudy.data.model.DealItem
+
 // TODO this can be deleted once you start fetching the data from the API
 object StaticData {
   val deals: List<DealItem> = listOf(
