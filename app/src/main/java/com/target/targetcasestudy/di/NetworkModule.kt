@@ -1,9 +1,9 @@
 package com.target.targetcasestudy.di
 
-import com.target.targetcasestudy.api.BASE_URL
-import com.target.targetcasestudy.api.DealApiKtx
+import com.target.targetcasestudy.data.api.DealApiKtx
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.target.targetcasestudy.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +33,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()

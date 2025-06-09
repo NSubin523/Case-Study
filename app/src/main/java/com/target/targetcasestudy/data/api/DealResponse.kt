@@ -1,4 +1,4 @@
-package com.target.targetcasestudy.api
+package com.target.targetcasestudy.data.api
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
