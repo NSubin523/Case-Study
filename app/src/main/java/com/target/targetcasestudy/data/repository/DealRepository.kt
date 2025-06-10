@@ -9,5 +9,5 @@ class DealRepository @Inject constructor(
 ) {
     suspend fun retrieveDeals(): List<Deal> = api.retrieveDeals().deals
 
-    suspend fun retrieveDeal(id: String): Deal = api.retrieveDeal(id)
+    suspend fun retrieveDeal(id: Int): Deal = api.retrieveDeal(id)
 }

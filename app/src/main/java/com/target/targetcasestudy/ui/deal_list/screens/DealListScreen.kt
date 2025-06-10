@@ -170,14 +170,21 @@ fun DealItemCard(
 
       Text(
         text = buildAnnotatedString {
-          withStyle(style = SpanStyle(color = Color.Green)) {
-            append(dealItem.availability)
+          if (dealItem.availability.isEmpty()) {
+            withStyle(style = SpanStyle(color = Color.Black)) {
+              append("Unavailable")
+            }
+          } else {
+            withStyle(style = SpanStyle(color = Color.Green)) {
+              append(dealItem.availability)
+            }
+            append(" in aisle ")
+            append(dealItem.aisle.uppercase())
           }
-          append(" in aisle ")
-          append(dealItem.aisle.uppercase())
         },
-        fontSize = 12.sp,
+        fontSize = 12.sp
       )
+
     }
   }
 }
