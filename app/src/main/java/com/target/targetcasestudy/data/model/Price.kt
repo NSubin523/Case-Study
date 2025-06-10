@@ -1,7 +1,17 @@
 package com.target.targetcasestudy.data.model
 
+
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class Price(
-  val amountInCents: Int,
-  val currencySymbol: String,
-  val displayString: String
+  @Json(name = "amount_in_cents")
+  val amountInCents: Int?,
+
+  @Json(name = "currency_symbol")
+  val currencySymbol: String?,
+
+  @Json(name = "display_string")
+  val displayString: String?
 )

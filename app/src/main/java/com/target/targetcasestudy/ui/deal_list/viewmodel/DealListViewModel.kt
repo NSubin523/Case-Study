@@ -1,5 +1,6 @@
 package com.target.targetcasestudy.ui.deal_list.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.domain.usecase.RetrieveDeals
@@ -28,6 +29,7 @@ class DealListViewModel @Inject constructor(
                 val deals = dealUseCase.invoke()
                 _uiState.value = DealListUiState.Success(deals)
             } catch (e: Exception) {
+                Log.e("DealListViewModel", "Error fetching deals", e)
                 _uiState.value = DealListUiState.Error("Failed to load deals")
             }
         }
