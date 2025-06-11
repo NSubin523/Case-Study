@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.domain.usecase.RetrieveDeal
 import com.target.targetcasestudy.ui.deal_detail.DealDetailUiState
+import com.target.targetcasestudy.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,7 +30,7 @@ class DealDetailViewModel @Inject constructor(
                 _uiState.value = DealDetailUiState.Success(deal)
             } catch (e: Exception) {
                 Log.e("DealDetailViewModel", "Error fetching deal", e)
-                _uiState.value = DealDetailUiState.Error("Failed to load deal details")
+                _uiState.value = DealDetailUiState.Error(Constants.ERROR_TEXT_DEAL_DETAIL_SCREEN)
             }
         }
     }

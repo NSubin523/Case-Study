@@ -6,7 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,15 +14,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.target.targetcasestudy.data.model.Deal
 import com.target.targetcasestudy.ui.deal_detail.DealDetailUiState
 import com.target.targetcasestudy.ui.deal_detail.viewmodel.DealDetailViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.target.targetcasestudy.utils.Constants
+import com.target.targetcasestudy.utils.CustomColors
+import com.target.targetcasestudy.utils.Dimension
 
 @Composable
 fun DealDetailScreen(
@@ -45,7 +45,7 @@ fun DealDetailScreen(
 
         is DealDetailUiState.Error -> {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("Failed to load deal", color = Color.Red)
+                Text(Constants.ERROR_TEXT_DEAL_DETAIL_SCREEN, color = CustomColors.ERROR)
             }
         }
 
@@ -70,25 +70,28 @@ fun DealDetailContent(
     ) {
         // Top Bar
         Surface(
-            shadowElevation = 6.dp,
+            shadowElevation = Dimension.Padding.xs,
             modifier = Modifier.fillMaxWidth(),
-            color = Color(0xFFF5F5F5)
+            color = CustomColors.ELEVATION_BG_COLOR
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, top = 16.dp, bottom = 16.dp),
+                    .padding(start = Dimension.Padding.xl, top = Dimension.Padding.xl, bottom = Dimension.Padding.xl),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBackClick) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back",
+                        tint = CustomColors.TARGET_RED
+                    )
                 }
                 Text(
-                    text = "Details",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    modifier = Modifier.padding(start = 8.dp)
+                    text = Constants.NAVBAR_TITLE_DETAILS,
+                    fontSize = Dimension.FontSize.display,
+                    fontWeight = Dimension.Weight.bold,
+                    color = CustomColors.DEAL_TEXT_BASE_COLOR,
+                    modifier = Modifier.padding(start = Dimension.Padding.s)
                 )
             }
         }
@@ -100,83 +103,101 @@ fun DealDetailContent(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp)
-                .padding(16.dp)
-                .clip(RoundedCornerShape(12.dp))
+                .height(Dimension.Padding.dealDetailImageMinHeight)
+                .padding(Dimension.Padding.xl)
+                .clip(RoundedCornerShape(Dimension.Padding.l))
         )
 
         // Title
         Text(
             text = deal.title,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            fontSize = Dimension.FontSize.titleLarge,
+            modifier = Modifier.padding(horizontal = Dimension.Padding.xl, vertical = Dimension.Padding.s)
         )
+
+        Spacer(modifier = Modifier.height(Dimension.Padding.xxl))
 
         // Price Section
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = Dimension.Padding.xl)
         ) {
             deal.salePrice?.let { sale ->
                 Text(
                     text = sale.displayString ?: "",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Red
+                    fontSize = Dimension.FontSize.display,
+                    fontWeight = Dimension.Weight.bold,
+                    color = CustomColors.TARGET_RED
                 )
                 deal.regularPrice.let { regular ->
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Dimension.Padding.s))
                     Text(
                         text = "reg. ${regular.displayString ?: ""}",
-                        fontSize = 12.sp,
-                        color = Color.Black
+                        fontSize = Dimension.FontSize.titleSmall,
+                        color = CustomColors.DEAL_TEXT_BASE_COLOR
                     )
                 }
             } ?: run {
                 Text(
                     text = deal.regularPrice.displayString ?: "",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    fontSize = Dimension.FontSize.display,
+                    fontWeight = Dimension.Weight.bold,
+                    color = CustomColors.DEAL_TEXT_BASE_COLOR
                 )
             }
         }
 
         Text(
             text = deal.fulfillment,
-            fontSize = 16.sp,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            fontSize = Dimension.FontSize.titleMedium,
+            modifier = Modifier.padding(horizontal = Dimension.Padding.xl, vertical = Dimension.Padding.s)
+        )
+
+        Spacer(modifier = Modifier.height(Dimension.Padding.s))
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
+            thickness = Dimension.Padding.xxl,
+            color = Color(0xFFF0F0F0)
         )
 
         Text(
-            text = "Product Details",
-            fontSize = 20.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 20.dp)
+            text = Constants.PRODUCT_DESCRIPTION_TITLE_TEXT,
+            fontSize = Dimension.FontSize.titleLarge,
+            color = CustomColors.DEAL_TEXT_BASE_COLOR,
+            fontWeight = Dimension.Weight.bold,
+            modifier = Modifier.padding(horizontal = Dimension.Padding.xl, vertical = Dimension.Padding.xxl)
         )
+
+        Spacer(modifier = Modifier.height(Dimension.Padding.s))
 
         // Description
         Text(
             text = deal.description,
-            fontSize = 14.sp,
-            color = Color.DarkGray,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            fontSize = Dimension.FontSize.titleMedium,
+            color = CustomColors.DEAL_DESCRIPTION_TEXT_COLOR,
+            modifier = Modifier.padding(horizontal = Dimension.Padding.xl, vertical = Dimension.Padding.s)
         )
+
+        Spacer(modifier = Modifier.height(Dimension.Padding.s))
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
+            thickness = Dimension.Padding.dividerSlim,
+            color = CustomColors.BORDER_GREY
+        )
+
 
         // Bottom Add to Cart Button
         Box(
-            modifier = Modifier.fillMaxWidth().padding(16.dp).clip(RoundedCornerShape(10.dp)),
+            modifier = Modifier.fillMaxWidth().padding(Dimension.Padding.xl).clip(RoundedCornerShape(Dimension.Padding.m)),
             contentAlignment = Alignment.BottomCenter
         ) {
             Button(
                 onClick = { /* TODO: Add cart action */ },
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                modifier = Modifier.fillMaxWidth().height(Dimension.Padding.buttonMinHeight),
+                shape = RoundedCornerShape(Dimension.Padding.s),
+                colors = ButtonDefaults.buttonColors(containerColor = CustomColors.TARGET_RED)
             ) {
-                Text(text = "Add to Cart", fontSize = 16.sp)
+                Text(text = "Add to Cart", fontSize = Dimension.FontSize.titleMedium)
             }
         }
     }

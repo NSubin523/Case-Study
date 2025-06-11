@@ -12,9 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.target.targetcasestudy.data.model.Deal
 import com.target.targetcasestudy.ui.deal_list.DealListUiState
@@ -23,10 +20,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
+import com.target.targetcasestudy.utils.Constants
+import com.target.targetcasestudy.utils.CustomColors
+import com.target.targetcasestudy.utils.Dimension
 
 @Composable
 fun DealListScreen(
@@ -48,18 +47,18 @@ fun DealListScreen(
       Column(modifier = Modifier.fillMaxSize()) {
 
         Surface(
-          shadowElevation = 6.dp,
+          shadowElevation = Dimension.Padding.xs,
           modifier = Modifier.fillMaxWidth(),
-          color =  Color(0xFFF5F5F5)
+          color = CustomColors.ELEVATION_BG_COLOR
         ) {
-          Column(modifier = Modifier.padding(bottom = 8.dp)) {
+          Column(modifier = Modifier.padding(bottom = Dimension.Padding.s)) {
             Text(
-              text = "List",
-              fontSize = 25.sp,
-              fontWeight = FontWeight.Bold,
-              color = Color.Black,
+              text = Constants.NAVBAR_TITLE_MAIN_SCREEN,
+              fontSize = Dimension.FontSize.display,
+              fontWeight = Dimension.Weight.bold,
+              color = CustomColors.DEAL_TEXT_BASE_COLOR,
               modifier = Modifier
-                .padding(start = 16.dp, top = 16.dp, bottom = 20.dp)
+                .padding(start = Dimension.Padding.xl, top = Dimension.Padding.xl, bottom = Dimension.Padding.xxl)
             )
           }
         }
@@ -67,8 +66,8 @@ fun DealListScreen(
         LazyColumn(
           modifier = Modifier
             .fillMaxSize()
-            .padding(5.dp),
-          verticalArrangement = Arrangement.spacedBy(12.dp)
+            .padding(Dimension.Padding.xxs),
+          verticalArrangement = Arrangement.spacedBy(Dimension.Padding.l)
         ) {
           items(deals) { deal ->
             DealItemCard(dealItem = deal, onClick = { onItemClick(deal) })
@@ -76,9 +75,9 @@ fun DealListScreen(
             HorizontalDivider(
               modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp),
-              thickness = 1.dp,
-              color = Color.Gray
+                .padding(start = Dimension.Padding.xl),
+              thickness = Dimension.Padding.dividerSlim,
+              color = CustomColors.BORDER_GREY
             )
           }
         }
@@ -88,7 +87,7 @@ fun DealListScreen(
 
     is DealListUiState.Error -> {
       Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Failed to load deals", color = Color.Red)
+        Text(Constants.ERROR_TEXT_MAIN_SCREEN, color = CustomColors.ERROR)
       }
     }
   }
@@ -103,16 +102,16 @@ fun DealItemCard(
     modifier = Modifier
       .fillMaxWidth()
       .clickable { onClick() }
-      .padding(horizontal = 12.dp, vertical = 8.dp),
+      .padding(horizontal = Dimension.Padding.l, vertical = Dimension.Padding.s),
     verticalAlignment = Alignment.CenterVertically
   ) {
     Image(
       painter = rememberAsyncImagePainter(dealItem.imageUrl.toString()),
       contentDescription = dealItem.title,
       modifier = Modifier
-        .size(180.dp, 160.dp)
-        .padding(end = 12.dp)
-        .clip(RoundedCornerShape(12.dp)),
+        .size(Dimension.Padding.dealListImageWidth, Dimension.Padding.dealListImageHeight)
+        .padding(end = Dimension.Padding.l)
+        .clip(RoundedCornerShape(Dimension.Padding.l)),
       contentScale = ContentScale.Crop
     )
 
@@ -128,25 +127,25 @@ fun DealItemCard(
         dealItem.salePrice?.let { sale ->
           Text(
             text = sale.displayString ?: "",
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            color = Color.Red
+            fontWeight = Dimension.Weight.bold,
+            fontSize = Dimension.FontSize.titleLarge,
+            color = CustomColors.TARGET_RED
           )
 
           dealItem.regularPrice.let { regular ->
-            Spacer(modifier = Modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(Dimension.Padding.xs))
             Text(
               text = "reg. ${regular.displayString ?: ""}",
-              fontSize = 12.sp,
-              color = Color.Black
+              fontSize = Dimension.FontSize.titleSmall,
+              color = CustomColors.DEAL_TEXT_BASE_COLOR
             )
           }
         } ?: run {
             Text(
               text = dealItem.regularPrice.displayString ?: "Price Unavailable",
-              fontWeight = FontWeight.Bold,
-              fontSize = 20.sp,
-              color = Color.Black
+              fontWeight = Dimension.Weight.bold,
+              fontSize = Dimension.FontSize.titleLarge,
+              color = CustomColors.DEAL_TEXT_BASE_COLOR
             )
         }
       }
@@ -154,35 +153,35 @@ fun DealItemCard(
 
       Text(
         text = dealItem.fulfillment,
-        fontSize = 12.sp,
-        color = Color.Gray,
-        modifier = Modifier.padding(top = 2.dp, bottom = 2.dp),
+        fontSize = Dimension.FontSize.titleSmall,
+        color = CustomColors.BORDER_GREY,
+        modifier = Modifier.padding(top = Dimension.Padding.textPadding, bottom = Dimension.Padding.textPadding),
       )
-      Spacer(modifier = Modifier.height(10.dp))
+      Spacer(modifier = Modifier.height(Dimension.Padding.m))
 
       Text(
         text = dealItem.title,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        modifier = Modifier.padding(bottom = 2.dp)
+        fontWeight = Dimension.Weight.regular,
+        fontSize = Dimension.FontSize.titleMedium,
+        modifier = Modifier.padding(bottom = Dimension.Padding.textPadding)
       )
-      Spacer(modifier = Modifier.height(10.dp))
+      Spacer(modifier = Modifier.height(Dimension.Padding.m))
 
       Text(
         text = buildAnnotatedString {
           if (dealItem.availability.isEmpty()) {
-            withStyle(style = SpanStyle(color = Color.Black)) {
+            withStyle(style = SpanStyle(color = CustomColors.DEAL_TEXT_BASE_COLOR)) {
               append("Unavailable")
             }
           } else {
-            withStyle(style = SpanStyle(color = Color.Green)) {
+            withStyle(style = SpanStyle(color = CustomColors.DEAL_AVAILABILITY_COLOR)) {
               append(dealItem.availability)
             }
             append(" in aisle ")
             append(dealItem.aisle.uppercase())
           }
         },
-        fontSize = 12.sp
+        fontSize = Dimension.FontSize.titleSmall
       )
 
     }
