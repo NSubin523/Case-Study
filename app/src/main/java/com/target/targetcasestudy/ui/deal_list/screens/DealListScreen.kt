@@ -15,7 +15,6 @@ import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberAsyncImagePainter
 import com.target.targetcasestudy.data.model.Deal
 import com.target.targetcasestudy.ui.deal_list.DealListUiState
-import com.target.targetcasestudy.ui.deal_list.viewmodel.DealListViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
@@ -23,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
+import com.target.targetcasestudy.ui.deal_list.viewmodel.DealListViewModel
 import com.target.targetcasestudy.utils.Constants
 import com.target.targetcasestudy.utils.CustomColors
 import com.target.targetcasestudy.utils.Dimension
