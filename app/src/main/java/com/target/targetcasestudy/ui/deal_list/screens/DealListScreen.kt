@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import com.target.targetcasestudy.ui.deal_list.DealListUiState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -26,6 +29,8 @@ import com.target.targetcasestudy.ui.deal_list.viewmodel.DealListViewModel
 import com.target.targetcasestudy.utils.Constants
 import com.target.targetcasestudy.utils.CustomColors
 import com.target.targetcasestudy.utils.Dimension
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @Composable
 fun DealListScreen(
@@ -43,6 +48,9 @@ fun DealListScreen(
 
     is DealListUiState.Success -> {
       val deals = (uiState as DealListUiState.Success).deals
+      var searchQuery by remember { mutableStateOf("") }
+      val filteredDeals = if (searchQuery.isBlank()) deals
+                          else deals.filter { it.title.contains(searchQuery, ignoreCase = true) }
 
       Column(modifier = Modifier.fillMaxSize()) {
 
@@ -63,13 +71,31 @@ fun DealListScreen(
           }
         }
 
+        OutlinedTextField(
+          value = searchQuery,
+          onValueChange = { searchQuery = it },
+          placeholder = { Text("Search...") },
+          leadingIcon = {
+            Icon(
+              imageVector = Icons.Default.Search,
+              contentDescription = "Search icon"
+            )
+          },
+          modifier = Modifier.fillMaxWidth().padding(
+            horizontal = Dimension.Padding.xxs,
+            vertical = Dimension.Padding.xs
+          ),
+          singleLine = true,
+          shape = RoundedCornerShape(Dimension.Padding.s)
+        )
+
         LazyColumn(
           modifier = Modifier
             .fillMaxSize()
             .padding(Dimension.Padding.xxs),
           verticalArrangement = Arrangement.spacedBy(Dimension.Padding.l)
         ) {
-          items(deals) { deal ->
+          items(filteredDeals) { deal ->
             DealItemCard(dealItem = deal, onClick = { onItemClick(deal) })
 
             HorizontalDivider(

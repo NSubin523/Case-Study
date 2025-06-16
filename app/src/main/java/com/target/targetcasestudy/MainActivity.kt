@@ -11,25 +11,22 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+        setContent {
+            var selectedDeal by remember { mutableStateOf<Deal?>(null) }
 
-    setContent {
-      var selectedDeal by remember { mutableStateOf<Deal?>(null) }
-
-      if (selectedDeal == null) {
-        DealListScreen(
-          onItemClick = { deal ->
-            selectedDeal = deal
-          }
-        )
-      } else {
-        DealDetailScreen(
-          dealId = selectedDeal!!.id,
-          onBackClick = { selectedDeal = null }
-        )
-      }
+            if (selectedDeal == null) {
+                DealListScreen(
+                    onItemClick = { deal -> selectedDeal = deal }
+                )
+            } else {
+                DealDetailScreen(
+                    dealId = selectedDeal!!.id,
+                    onBackClick = { selectedDeal = null }
+                )
+            }
+        }
     }
-  }
 }
