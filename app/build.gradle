@@ -1,0 +1,112 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.devtools.ksp'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+
+android {
+  compileSdk 35
+
+  defaultConfig {
+    applicationId "com.target.targetcasestudy"
+    minSdkVersion 24
+    targetSdkVersion 34
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlin {
+    jvmToolchain(17)
+  }
+
+  buildFeatures {
+    compose true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  namespace 'com.target.targetcasestudy'
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+  // Core Kotlin and AndroidX
+  implementation libs.kotlin
+  implementation libs.androidXAppCompat
+  implementation libs.androidXActivityCompose
+  implementation libs.androidXConstraintLayout
+  implementation libs.androidXRecyclerView
+
+  // Compose BOM
+  implementation platform(libs.composeBom)
+  implementation libs.composeRuntime
+  implementation libs.composeUi
+  implementation libs.composeFoundation
+  implementation libs.androidXUITooling
+  implementation libs.composeMaterialDesign
+  implementation(libs.material3)
+
+  // Lifecycle
+  implementation libs.lifecycle.viewmodel.compose
+  implementation libs.lifecycle.runtime.compose
+  implementation libs.lifecycle.runtime.compose.v262
+  implementation libs.lifecycle.viewmodel.compose.v262
+
+  // Navigation & Image
+  implementation libs.navigation.compose
+  implementation(libs.coil.compose)
+  implementation libs.glide
+
+  // Retrofit, OkHttp, Moshi, Gson, Jackson
+  implementation libs.retrofit
+  implementation libs.retrofitRx2Adapter
+  implementation libs.okHttp
+  implementation libs.gson
+  implementation libs.jackson
+  implementation libs.moshi
+  implementation libs.moshi.kotlin
+  implementation libs.converter.moshi
+  ksp libs.moshi.kotlin.codegen
+
+  // Coroutines
+  implementation libs.kotlinx.coroutines.core
+  implementation libs.kotlinx.coroutines.android
+
+  // Hilt
+  implementation libs.hiltAndroid
+  implementation libs.hilt.navigation.compose
+  ksp libs.hiltCompiler
+
+  // Unit tests (run in JVM)
+  testImplementation libs.junit
+  testImplementation libs.kotlinx.coroutines.test
+  testImplementation libs.mockito.core
+  testImplementation libs.mockito.kotlin
+  testImplementation libs.mockk
+  testImplementation libs.mockwebserver
+
+  // Instrumentation tests (androidTest)
+  androidTestImplementation libs.junit.v115
+  androidTestImplementation libs.runner.v152
+  androidTestImplementation libs.core.v150
+  androidTestImplementation libs.espresso.core.v351
+
+  androidTestImplementation libs.ui.test.junit4
+  debugImplementation libs.ui.test.manifest
+
+  androidTestImplementation libs.mockito.kotlin
+  androidTestImplementation libs.mockito.android
+
+}
