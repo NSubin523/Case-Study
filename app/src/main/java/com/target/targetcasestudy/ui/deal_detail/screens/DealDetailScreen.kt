@@ -30,13 +30,23 @@ fun DealDetailScreen(
     onBackClick: () -> Unit,
     viewModel: DealDetailViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(Unit) {
+    LaunchedEffect(dealId) {
         viewModel.getDealById(dealId)
+    }
+
+    DisposableEffect(viewModel) {
+        onDispose {
+            viewModel.resetUiState()
+        }
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
+        is DealDetailUiState.InitialState -> {
+            Box(Modifier.fillMaxSize()){}
+        }
+
         is DealDetailUiState.Loading -> {
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()

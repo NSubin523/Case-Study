@@ -17,7 +17,7 @@ class DealDetailViewModel @Inject constructor(
     private val retrieveDeal: RetrieveDeal
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<DealDetailUiState>(DealDetailUiState.Loading)
+    private val _uiState = MutableStateFlow<DealDetailUiState>(DealDetailUiState.InitialState)
     val uiState: StateFlow<DealDetailUiState> = _uiState
 
     /**
@@ -25,6 +25,7 @@ class DealDetailViewModel @Inject constructor(
      */
     fun getDealById(id: Int) {
         viewModelScope.launch {
+            _uiState.value = DealDetailUiState.Loading
             try {
                 val deal = retrieveDeal(id)
                 _uiState.value = DealDetailUiState.Success(deal)
@@ -33,5 +34,17 @@ class DealDetailViewModel @Inject constructor(
                 _uiState.value = DealDetailUiState.Error(Constants.ERROR_TEXT_DEAL_DETAIL_SCREEN)
             }
         }
+    }
+
+    /**
+     * Resets the UI state to [DealDetailUiState.InitialState].
+     *
+     * This function is useful when navigating away from the deal detail screen.
+     * Calling it ensures that when the user returns, or if a new deal is subsequently
+     * loaded, they don't briefly see stale data from a previous interaction.
+     * It allows the UI to explicitly clear its content.
+     */
+    fun resetUiState() {
+        _uiState.value = DealDetailUiState.InitialState
     }
 }
